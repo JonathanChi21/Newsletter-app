@@ -20,7 +20,7 @@ app.post('/', (req, res)=>{
     const firstName = req.body.fName;
     const lastName = req.body.lName;
     const email = req.body.email;
-    
+
     const data = {
         members: [
             {
@@ -35,11 +35,11 @@ app.post('/', (req, res)=>{
     };
 
     const jsonData = JSON.stringify(data);
-    const url = 'https://us8.api.mailchimp.com/3.0/lists/868c7de5b9';
-    
+    const url = 'https://us8.api.mailchimp.com/3.0/lists/'; // Concatenate the Audience ID
+
     const options = {
         method: 'POST',
-        auth: 'jonathan:a497f84a3d1aee8198b4415ec3f10bb2-us8'
+        auth: 'jonathan:api' // -> Here goes the Mailchimp API
     };
 
     const request = https.request(url, options, (response)=>{
@@ -51,18 +51,15 @@ app.post('/', (req, res)=>{
         }
 
         response.on('data', (data)=>{
-            console.log(JSON.parse(data)); 
+            console.log(JSON.parse(data));
         });
     });
 
     request.write(jsonData);
     request.end();
-    
+
 });
 
 app.listen(3000, (req, res)=>{
     console.log("Server running on port 3000!");
 });
-
-// Audience ID: 868c7de5b9*/
-// API Key: a497f84a3d1aee8198b4415ec3f10bb2-us8
